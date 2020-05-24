@@ -2,29 +2,27 @@ const table = document.getElementById("main-table");
 
 window.addEventListener('load', () => {
 
-    const urls = [
-        fetch('https://swapi.dev/api/planets/'),
-        fetch('https://swapi.dev/api/people/'),
-        fetch('https://swapi.dev/api/species/')
-    ];
-    Promise.all(urls)
-        .then(responses => {
-            return responses.map(response => {
-                return response.json();
-            }
-            )
-        })
-        .then(promises => {
-            console.log('thisn here is the response ', promises);
-            console.log(typeof promises);
 
-        })
-        .then(Promise.resolve(urls)).then(promise => {
-            console.log('your promises, sir ', promise);
-               
-            
-})
-.catch (error => console.log('you got yerself an error ', error))
+        // fetch('https://swapi.dev/api/planets/'),
+        // fetch('https://swapi.dev/api/people/'),
+        // fetch('https://swapi.dev/api/species/')
+
+     fetch('https://swapi.dev/api/people/')
+     .then((response) => response.json())
+     .then((values) => {
+         const characters = values.results;
+         console.log('characters are ', characters );
+
+         characters.map((person) => {
+           const homeWorld = fetch('https://swapi.dev/api/planets/')
+           
+           .then((response) => response.json())
+           .then((homeWorld) => {
+               console.log('homeworld is ', homeWorld);
+           })
+         })
+      })
+      .catch (error => console.log('you got yerself an error ', error))
 });
 
 
