@@ -14,15 +14,14 @@ window.addEventListener('load', () => {
          console.log('characters are ', characters );
 
          characters.map((person) => {
-           const homeWorld = fetch('https://swapi.dev/api/planets/')
-           
+         const homeWorld = fetch(person.homeworld)
            .then((response) => response.json())
            .then((homeWorld) => {
-               console.log('homeworld is ', homeWorld);
+                // console.log('homeworld value is ', homeWorld)
+                const homeWorldName = homeWorld.name;
+               console.log( person.name + "is from " + homeWorldName);
            })
          })
       })
       .catch (error => console.log('you got yerself an error ', error))
 });
-
-
