@@ -6,50 +6,26 @@ window.addEventListener('load', async () => {
 
     const getPeople = await fetch('https://swapi.dev/api/people/')
         .then((response) => response.json());
-    // .then((values) => {
-    //     const characters = values.results;
-    //     characters.forEach((character) => {
-    //         name = character.name;
-    //         console.log('character name is ', name);
-    //         return name;
-    //     })
-    // })
-    // .catch (error => console.log('you got yerself an error in people promise', error));
+ 
 
     const getPlanets = await fetch('https://swapi.dev/api/planets/')
         .then((response) => response.json());
-    // .then((planets) => {
-    //     const homeWorld = planets.results;
-    //     homeWorld.forEach((homeworld) => {
-    //         console.log('characters homeworld is ', homeworld.name);
-    //     })
-    // })
-    // .catch (error => console.log('you got yerself an error in planets promise', error));
+
 
     const getSpecies = await fetch('https://swapi.dev/api/species/')
         .then((response) => response.json());
-    // .then((type) => {
-    //     const species = type.results;
-    //     species.forEach((speciesType) => {
-    //     console.log('species is ', speciesType.name);
-    //     })
-    // })
-    // .catch (error => console.log('you got yerself an error in species promise', error));
 
-//    console.log('getPeople data =', getPeople.results);
-    // console.log('getPlanets data =', getPlanets.results);
-    // console.log('getSpecies data =', getSpecies.results);
 
     const people = getPeople.results;
     const planets = getPlanets.results;
     const species = getSpecies.results;
+console.log(people);
 
-
- const characters = people.forEach((character) => {
+    let characters = people.forEach((character) => {
     // console.log('character name is ', character.name);
     characterData = {
     name: character.name,
-    birthYear: character.birth_year,
+    birthyear: character.birth_year,
     height: character.height,
     mass: character.mass,
    }
@@ -57,13 +33,13 @@ window.addEventListener('load', async () => {
     return  characterData;
 })
     
- const planet =  planets.forEach((homeworld) => {
+    const planet =  planets.forEach((homeworld) => {
         // console.log('characters homeworld is ', homeworld.name);
         homeWorld = homeworld.name;
         return homeWorld;
     })
 
-  const type = species.forEach((speciesType) => {
+    const type = species.forEach((speciesType) => {
     //     // console.log('species is ', speciesType.name);
         classification = speciesType.name;
         return classification;
@@ -89,7 +65,7 @@ window.addEventListener('load', async () => {
     tableRow.appendChild(tableCell6);
 
     tableCell1.textContent = characterData.name;
-    tableCell2.textContent = characterData.birth_year;
+    tableCell2.textContent = characterData.birthyear;
     tableCell3.textContent = characterData.height;
     tableCell4.textContent = characterData.mass;
     tableCell5.textContent = homeWorld;
