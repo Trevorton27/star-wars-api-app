@@ -19,6 +19,7 @@ window.addEventListener('load', async () => {
                 // console.log('getHomeWorld response = ', response.results);
             return response.results;
         };
+
         const getSpecies = async () => {
             const response = await fetch('https://swapi.dev/api/species/')
                 .then((response) => {
@@ -31,13 +32,14 @@ window.addEventListener('load', async () => {
             const worldData = await getHomeWorld(character.homeworld);
             const speciesData = await getSpecies(character.species);
 
-            const world = worldData.forEach((world) => {
-                console.log('homeworld name = ', world.name);
+            const world = worldData.map((world) => {
+                // console.log('homeworld name = ', world.name);
+                
                 return world.name;
             });
 
-            const species = speciesData.forEach((species) => {
-                console.log('species name = ', species.name);
+            const species = speciesData.map((species) => {
+                // console.log('species name = ', species.name);
                 return species.name;
             });
 
@@ -45,8 +47,10 @@ window.addEventListener('load', async () => {
                         name: character.name,
                         height: character.height,
                         mass: character.mass,
-                        homeWorld: world,
-                        species: species,
+                        homeWorld: world.map((world) => {
+                            return world.name;
+                        }),
+                        species: species ,
                         birthDate: character.birth_year
                     };
 
