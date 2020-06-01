@@ -34,8 +34,9 @@ window.addEventListener('load', async () => {
 
             const world = worldData.map((world) => {
                 // console.log('homeworld name = ', world.name);
-                
-                return world.name;
+                const homeworld = world.name;
+               
+                return homeworld;
             });
 
             const species = speciesData.map((species) => {
@@ -47,9 +48,7 @@ window.addEventListener('load', async () => {
                         name: character.name,
                         height: character.height,
                         mass: character.mass,
-                        homeWorld: world.map((world) => {
-                            return world.name;
-                        }),
+                        homeWorld: world,
                         species: species ,
                         birthDate: character.birth_year
                     };
