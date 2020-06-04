@@ -11,15 +11,19 @@ window.addEventListener('load', async () => {
   
         const characterData = character;
         console.log(characterData);
-        const getHomeWorld = async () => {
+        const homeWorld = character.homeworld;
+        const getHomeWorld = async (homeWorld) => {
             const response = await fetch('https://swapi.dev/api/planets/')
                 .then((response) => {
-                   return response.json();
+                    console.log('homeworld is ', homeWorld);
+                  return response.json();
                 });
+                
                 // console.log('getHomeWorld response = ', response.results);
+                 
             return response.results;
         };
-
+       
         const getSpecies = async () => {
             const response = await fetch('https://swapi.dev/api/species/')
                 .then((response) => {
@@ -29,14 +33,13 @@ window.addEventListener('load', async () => {
                 return response.results;
         }
         const getCharacterData = async (character) => {
-            const worldData = await getHomeWorld(character.homeworld);
+            const worldData = await getHomeWorld(homeWorld);
             const speciesData = await getSpecies(character.species);
 
-            const world = worldData.map((world) => {
-                // console.log('homeworld name = ', world.name);
-                const homeworld = world.name;
-               
-                return homeworld;
+            const world =worldData.map((world) => {
+                // console.log('homeworld name = ', world.name)
+                const planet = world.name;
+                return planet;
             });
 
             const species = speciesData.map((species) => {
@@ -52,7 +55,6 @@ window.addEventListener('load', async () => {
                         species: species ,
                         birthDate: character.birth_year
                     };
-
                     return tableData;
         };
         getCharacterData(character).then((tableData) => {
@@ -86,6 +88,7 @@ window.addEventListener('load', async () => {
     })
     
 });
+
 
 
 
