@@ -8,60 +8,63 @@ window.addEventListener('load', async () => {
     const people = getPeople.results;
 
     people.forEach((character) => {
-  
+
         const characterData = character;
         console.log(characterData);
-        const homeWorld = character.homeworld;
-        const getHomeWorld = async (homeWorld) => {
+        const getHomeWorld = async (homeworld) => {
             const response = await fetch('https://swapi.dev/api/planets/')
                 .then((response) => {
-                    console.log('homeworld is ', homeWorld);
-                  return response.json();
+                    console.log('homeworld = ', response);
+                    return response.json();
                 });
-                
-                // console.log('getHomeWorld response = ', response.results);
-                 
-            return response.results;
+
+            const homeWorldName = response.results;
+                console.log('home world name = ', homeWorldName);
+            const world = homeWorldName.map((world) => {
+                return world.name;
+            });
+
+            return world;
         };
-       
+
         const getSpecies = async () => {
             const response = await fetch('https://swapi.dev/api/species/')
                 .then((response) => {
                     return response.json();
                 });
-                 // console.log('getSpecies response = ', response.results);
-                return response.results;
+
+            return response.results;
         }
         const getCharacterData = async (character) => {
-            const worldData = await getHomeWorld(homeWorld);
+            const worldData = await getHomeWorld(character.homeworld);
             const speciesData = await getSpecies(character.species);
 
-            const world =worldData.map((world) => {
-                // console.log('homeworld name = ', world.name)
-                const planet = world.name;
-                return planet;
-            });
+            // const world = worldData.map((world) => {
+            //     // console.log('homeworld name = ', world.name)
+
+            //     return world;
+            // });
 
             const species = speciesData.map((species) => {
                 // console.log('species name = ', species.name);
                 return species.name;
             });
 
-                const tableData = {
-                        name: character.name,
-                        height: character.height,
-                        mass: character.mass,
-                        homeWorld: world,
-                        species: species ,
-                        birthDate: character.birth_year
-                    };
-                    return tableData;
+            const tableData = {
+                name: character.name,
+                height: character.height,
+                mass: character.mass,
+                homeWorld:worldData,
+                species: species,
+                birthDate: character.birth_year
+            };
+            return tableData;
         };
         getCharacterData(character).then((tableData) => {
             console.log(tableData);
             const tableRow = document.createElement('tr');
             table.appendChild(tableRow);
-    
+
             const tableCell1 = document.createElement('td');
             tableRow.appendChild(tableCell1);
             const tableCell2 = document.createElement('td');
@@ -74,7 +77,7 @@ window.addEventListener('load', async () => {
             tableRow.appendChild(tableCell5);
             const tableCell6 = document.createElement('td');
             tableRow.appendChild(tableCell6);
-    
+
             tableCell1.textContent = tableData.name;
             tableCell2.textContent = tableData.birthDate;
             tableCell3.textContent = tableData.height;
@@ -82,63 +85,7 @@ window.addEventListener('load', async () => {
             tableCell5.textContent = tableData.homeWorld;
             tableCell6.textContent = tableData.species;
         });
-        
-        
-       
     })
-    
 });
 
-
-
-
-
-
-
-
-
-
-    //    
-
-    // const getSpecies = async () => {
-    //     await fetch('https://swapi.dev/api/species/')
-    //     .then((response) => response.json());
-    // }
-
-    // const species = getSpecies.results;
-
-    // planets.forEach((homeworld) => {
-    //     // console.log('characters homeworld is ', homeworld.name);
-    //     const homeWorld = homeworld.name;
-    //     return homeWorld;
-    // })
-
-    // species.forEach((speciesType) => {
-    //     //     // console.log('species is ', speciesType.name);
-    //     const classification = speciesType.name;
-    //     return classification;
-    // })
-
-    // const tableRow = document.createElement('tr');
-    // table.appendChild(tableRow);
-
-    // const tableCell1 = document.createElement('td');
-    // tableRow.appendChild(tableCell1);
-    // const tableCell2 = document.createElement('td');
-    // tableRow.appendChild(tableCell2);
-    // const tableCell3 = document.createElement('td');
-    // tableRow.appendChild(tableCell3);
-    // const tableCell4 = document.createElement('td');
-    // tableRow.appendChild(tableCell4);
-    // const tableCell5 = document.createElement('td');
-    // tableRow.appendChild(tableCell5);
-    // const tableCell6 = document.createElement('td');
-    // tableRow.appendChild(tableCell6);
-
-    // tableCell1.textContent = characterData.name;
-    // tableCell2.textContent = characterData.birth_year;
-    // tableCell3.textContent = characterData.height;
-    // tableCell4.textContent = characterData.mass;
-    // tableCell5.textContent = homeWorld;
-    // tableCell6.textContent = classification;
 
