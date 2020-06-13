@@ -10,22 +10,20 @@ window.addEventListener('load', async () => {
     people.forEach((character) => {
 
         const characterData = character;
-        console.log(characterData);
-        const getHomeWorld = async (homeworld) => {
-            const response = await fetch('https://swapi.dev/api/planets/')
+        // console.log(characterData);
+        const getHomeWorld = async (homeWorld) => {
+            const response = await fetch(homeWorld)
                 .then((response) => {
                     console.log('homeworld = ', response);
                     return response.json();
                 });
+                const worldInfo =  response;
+                const worldName = worldInfo.name;
+                console.log(worldName);
+                return worldName;
+            };
 
-            const homeWorldName = response.results;
-                console.log('home world name = ', homeWorldName);
-            const world = homeWorldName.map((world) => {
-                return world.name;
-            });
-
-            return world;
-        };
+        
 
         const getSpecies = async () => {
             const response = await fetch('https://swapi.dev/api/species/')
@@ -37,6 +35,7 @@ window.addEventListener('load', async () => {
         }
         const getCharacterData = async (character) => {
             const worldData = await getHomeWorld(character.homeworld);
+          
             const speciesData = await getSpecies(character.species);
 
             // const world = worldData.map((world) => {
@@ -61,7 +60,7 @@ window.addEventListener('load', async () => {
             return tableData;
         };
         getCharacterData(character).then((tableData) => {
-            console.log(tableData);
+            // console.log(tableData);
             const tableRow = document.createElement('tr');
             table.appendChild(tableRow);
 
@@ -87,5 +86,3 @@ window.addEventListener('load', async () => {
         });
     })
 });
-
-
