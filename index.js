@@ -10,51 +10,47 @@ window.addEventListener('load', async () => {
     people.forEach((character) => {
 
         const characterData = character;
-        // console.log(characterData);
+        console.log(characterData);
         const getHomeWorld = async (homeWorld) => {
             const response = await fetch(homeWorld)
                 .then((response) => {
-                    console.log('homeworld = ', response);
+                    // console.log('homeworld = ', response);
                     return response.json();
                 });
                 const worldInfo =  response;
                 const worldName = worldInfo.name;
-                console.log(worldName);
+                // console.log(worldName);
                 return worldName;
             };
+      
+        // const getSpecies = async (speciesUrl) => {
+        //     const response = await fetch(speciesUrl)
+        //         .then((response) => {
+        //             return response.json();
+        //         });
+        //         console.log(response);
+        //         const speciesInfo = response.results;
+        //         speciesInfo.map((species) => {
+        //         // console.log(species);
+        //         const speciesName = species.name;
+        //         console.log(speciesName);
 
-        
-
-        const getSpecies = async () => {
-            const response = await fetch('https://swapi.dev/api/species/')
-                .then((response) => {
-                    return response.json();
-                });
-
-            return response.results;
-        }
+        //         })
+        //     //     
+        //     // console.log(speciesInfo);
+        // };
         const getCharacterData = async (character) => {
-            const worldData = await getHomeWorld(character.homeworld);
+            const world = await getHomeWorld(character.homeworld);
           
-            const speciesData = await getSpecies(character.species);
+            // const species = await getSpecies(speciesUrl);
 
-            // const world = worldData.map((world) => {
-            //     // console.log('homeworld name = ', world.name)
-
-            //     return world;
-            // });
-
-            const species = speciesData.map((species) => {
-                // console.log('species name = ', species.name);
-                return species.name;
-            });
 
             const tableData = {
                 name: character.name,
                 height: character.height,
                 mass: character.mass,
-                homeWorld:worldData,
-                species: species,
+                homeWorld: world,
+        
                 birthDate: character.birth_year
             };
             return tableData;
