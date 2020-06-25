@@ -22,27 +22,28 @@ window.addEventListener('load', async () => {
                 // console.log(worldName);
                 return worldName;
             };
-      
-        // const getSpecies = async (speciesUrl) => {
-        //     const response = await fetch(speciesUrl)
-        //         .then((response) => {
-        //             return response.json();
-        //         });
-        //         console.log(response);
-        //         const speciesInfo = response.results;
-        //         speciesInfo.map((species) => {
-        //         // console.log(species);
-        //         const speciesName = species.name;
-        //         console.log(speciesName);
+        
+            // const speciesUrl = "http://swapi.dev/api/species/2/";
+        const getSpecies = async (speciesUrl) => {
+            const response = await fetch(speciesUrl)
+                .then((response) => {
+                    
+                    return response.json();
+                });
 
-        //         })
-        //     //     
-        //     // console.log(speciesInfo);
-        // };
+                const speciesInfo = response;
+                const speciesName = speciesInfo.name;
+                console.log(speciesName);
+
+                return speciesName;
+               
+                }
+           
+        
         const getCharacterData = async (character) => {
             const world = await getHomeWorld(character.homeworld);
-          
-            // const species = await getSpecies(speciesUrl);
+            const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
+            
 
 
             const tableData = {
@@ -50,7 +51,7 @@ window.addEventListener('load', async () => {
                 height: character.height,
                 mass: character.mass,
                 homeWorld: world,
-        
+                species: species,
                 birthDate: character.birth_year
             };
             return tableData;
