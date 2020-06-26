@@ -1,4 +1,8 @@
-.banana{
+#top-row{
     padding: 2em 2em 2em 2em;
-    margin: 2em 2em 2em 2em;
+    margin-bottom: 4em;
+    min-height: 20%;
+}
+.table{
+    margin-top: 2em;
 }

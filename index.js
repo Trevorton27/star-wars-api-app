@@ -1,4 +1,5 @@
 const table = document.getElementById("main-table");
+const inputField = document.getElementById("input-field");
 
 window.addEventListener('load', async () => {
 
@@ -83,3 +84,17 @@ window.addEventListener('load', async () => {
         });
     })
 });
+
+document
+    .getElementById("submitButton")
+    .addEventListener("click", () => {
+        console.log("I'm working");
+        console.log("input value is ", inputField.value);
+
+        const returnValue = async function(character) {
+            await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
+        }
+        
+        return returnValue;
+        
+    })
