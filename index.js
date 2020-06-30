@@ -1,5 +1,6 @@
 const table = document.getElementById("main-table");
 const inputField = document.getElementById("input-field");
+const searchResult = document.getElementById("search-results");
 
 window.addEventListener('load', async () => {
 
@@ -11,7 +12,7 @@ window.addEventListener('load', async () => {
     people.forEach((character) => {
 
         const characterData = character;
-        console.log(characterData);
+        // console.log(characterData);
         const getHomeWorld = async (homeWorld) => {
             const response = await fetch(homeWorld)
                 .then((response) => {
@@ -34,7 +35,7 @@ window.addEventListener('load', async () => {
 
                 const speciesInfo = response;
                 const speciesName = speciesInfo.name;
-                console.log(speciesName);
+                // console.log(speciesName);
 
                 return speciesName;
                
@@ -85,16 +86,27 @@ window.addEventListener('load', async () => {
     })
 });
 
+
+const returnValue = async function() {
+     await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
+    .then(response => response.json())
+    .then(response => {
+      console.log(response.results);
+      return response.results;
+
+    
+    })
+};
+
+
+
 document
     .getElementById("submitButton")
     .addEventListener("click", () => {
         console.log("I'm working");
         console.log("input value is ", inputField.value);
-
-        const returnValue = async function(character) {
-            await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
-        }
+        searchResult.textContent = returnValue();
         
-        return returnValue;
+        
         
     })
