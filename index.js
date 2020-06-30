@@ -41,12 +41,9 @@ window.addEventListener('load', async () => {
                
                 }
            
-        
         const getCharacterData = async (character) => {
             const world = await getHomeWorld(character.homeworld);
             const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
-            
-
 
             const tableData = {
                 name: character.name,
@@ -86,16 +83,21 @@ window.addEventListener('load', async () => {
     })
 });
 
-
 const returnValue = async function() {
      await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
     .then(response => response.json())
     .then(response => {
       console.log(response.results);
-      return response.results;
-
-    
+      const data = response.results;
+      console.log(data);
+      data.map(({name, height, mass, hair_color}) => {
+          console.log(name, height, mass, hair_color);
+          return name;
+      })
+      
     })
+  
+    
 };
 
 
