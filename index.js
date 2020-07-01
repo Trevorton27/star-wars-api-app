@@ -92,23 +92,33 @@ const returnValue = async function() {
       console.log(data);
       data.map(({name, height, mass, hair_color}) => {
           console.log(name, height, mass, hair_color);
-          return name;
+          return {name, height, mass, hair_color};
       })
-      
     })
-  
-    
 };
-
-
 
 document
     .getElementById("submitButton")
     .addEventListener("click", () => {
         console.log("I'm working");
         console.log("input value is ", inputField.value);
-        searchResult.textContent = returnValue();
-        
-        
-        
+        searchResult.textContent = returnValue().then((name, height, mass, hair_color) => {
+
+            const tableRow = document.createElement('tr');
+            table.appendChild(tableRow);
+
+            const tableCell1 = document.createElement('td');
+            tableRow.appendChild(tableCell1);
+            const tableCell2 = document.createElement('td');
+            tableRow.appendChild(tableCell2);
+            const tableCell3 = document.createElement('td');
+            tableRow.appendChild(tableCell3);
+            const tableCell4 = document.createElement('td');
+            tableRow.appendChild(tableCell4);
+
+            tableCell1.textContent = name;
+            tableCell2.textContent = height;
+            tableCell3.textContent = mass;
+            tableCell4.textContent = hair_color;
+        });
     })
