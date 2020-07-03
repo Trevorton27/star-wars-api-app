@@ -2,30 +2,27 @@ const table = document.getElementById("main-table");
 const inputField = document.getElementById("input-field");
 const searchResult = document.getElementById("search-results");
 
+
 window.addEventListener('load', async () => {
 
     const getPeople = await fetch('https://swapi.dev/api/people/')
         .then((response) => response.json());
-
+        console.log('people api results: ', getPeople.results);
     const people = getPeople.results;
 
     people.forEach((character) => {
 
-        const characterData = character;
-        // console.log(characterData);
         const getHomeWorld = async (homeWorld) => {
             const response = await fetch(homeWorld)
                 .then((response) => {
-                    // console.log('homeworld = ', response);
                     return response.json();
                 });
+
                 const worldInfo =  response;
                 const worldName = worldInfo.name;
-                // console.log(worldName);
                 return worldName;
             };
         
-            // const speciesUrl = "http://swapi.dev/api/species/2/";
         const getSpecies = async (speciesUrl) => {
             const response = await fetch(speciesUrl)
                 .then((response) => {
@@ -35,7 +32,6 @@ window.addEventListener('load', async () => {
 
                 const speciesInfo = response;
                 const speciesName = speciesInfo.name;
-                // console.log(speciesName);
 
                 return speciesName;
                
@@ -56,9 +52,9 @@ window.addEventListener('load', async () => {
             return tableData;
         };
         getCharacterData(character).then((tableData) => {
-            // console.log(tableData);
+            
             const tableRow = document.createElement('tr');
-            table.appendChild(tableRow);
+         table.appendChild(tableRow);
 
             const tableCell1 = document.createElement('td');
             tableRow.appendChild(tableCell1);
@@ -84,28 +80,41 @@ window.addEventListener('load', async () => {
 });
 
 const returnValue = async function() {
-     await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
+  return  await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
     .then(response => response.json())
     .then(response => {
-      console.log(response.results);
+    
       const data = response.results;
-      console.log(data);
-      data.map(({name, height, mass, hair_color}) => {
-          console.log(name, height, mass, hair_color);
-          return {name, height, mass, hair_color};
-      })
-    })
+      console.log('data value: ', data);
+
+      const searchReturnData = {
+          name: data.name,
+          height: data.height,
+          mass: data.mass,
+          hairColor: data.hair_color
+      }
+
+      return searchReturnData;
+    //   console.log(data);
+    //   return data.map((character) => {
+    //     //   console.log('character values is: ', character);
+    //       return character;
+    //   })
+    });
 };
 
 document
     .getElementById("submitButton")
     .addEventListener("click", () => {
-        console.log("I'm working");
-        console.log("input value is ", inputField.value);
-        searchResult.textContent = returnValue().then((name, height, mass, hair_color) => {
-
+        // console.log("I'm working");
+        // console.log("input value is ", inputField.value);
+         returnValue().then((searchReturnData) => {
+            document.getElementById('')
+            // console.log('return value is: ', character);
+            // console.log('returnValue() returns: ', character);
+          
             const tableRow = document.createElement('tr');
-            table.appendChild(tableRow);
+            searchResult.appendChild(tableRow);
 
             const tableCell1 = document.createElement('td');
             tableRow.appendChild(tableCell1);
@@ -116,9 +125,14 @@ document
             const tableCell4 = document.createElement('td');
             tableRow.appendChild(tableCell4);
 
-            tableCell1.textContent = name;
-            tableCell2.textContent = height;
-            tableCell3.textContent = mass;
-            tableCell4.textContent = hair_color;
+            tableCell1.textContent = searchReturnData.name;
+            // tableCell2.textContent = name.height;
+            // tableCell3.textContent = name.mass;
+            // tableCell4.textContent = name.hair_color;
+          console.log('search return data: ', searchReturnData);
+
+           
         });
     })
+
+    console.log(returnValue());
