@@ -1,6 +1,7 @@
 const table = document.getElementById("main-table");
 const inputField = document.getElementById("input-field");
 const searchResult = document.getElementById("search-results");
+const searchTable = document.getElementById("main-row");
 
 
 window.addEventListener('load', async () => {
@@ -38,6 +39,7 @@ window.addEventListener('load', async () => {
                 }
            
         const getCharacterData = async (character) => {
+            console.log(typeof character);
             const world = await getHomeWorld(character.homeworld);
             const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
 
@@ -51,10 +53,11 @@ window.addEventListener('load', async () => {
             };
             return tableData;
         };
+
         getCharacterData(character).then((tableData) => {
             
             const tableRow = document.createElement('tr');
-         table.appendChild(tableRow);
+            table.appendChild(tableRow);
 
             const tableCell1 = document.createElement('td');
             tableRow.appendChild(tableCell1);
@@ -83,36 +86,45 @@ const returnValue = async function() {
   return  await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
     .then(response => response.json())
     .then(response => {
-    
+        console.log( response.results);
       const data = response.results;
-      console.log('data value: ', data);
+      function renderTableHeader() {
 
-      const searchReturnData = {
-          name: data.name,
-          height: data.height,
-          mass: data.mass,
-          hairColor: data.hair_color
-      }
+        const tableHead1 = document.createElement('th');
+        searchTable.appendChild(tableHead1);
+        const tableHead2 = document.createElement('th');
+        searchTable.appendChild(tableHead2);
+        const tableHead3 = document.createElement('th');
+        searchTable.appendChild(tableHead3);
+        const tableHead4 = document.createElement('th');
+        searchTable.appendChild(tableHead4);
+        tableHead1.textContent = 'Name';
+        tableHead2.textContent = 'Height';
+        tableHead3.textContent = 'Mass';
+        tableHead4.textContent = 'Hair Color';
 
-      return searchReturnData;
-    //   console.log(data);
-    //   return data.map((character) => {
-    //     //   console.log('character values is: ', character);
-    //       return character;
-    //   })
-    });
-};
+    }
+   
+        renderTableHeader();
+      
+        data.forEach((data) => {
 
-document
-    .getElementById("submitButton")
-    .addEventListener("click", () => {
-        // console.log("I'm working");
-        // console.log("input value is ", inputField.value);
-         returnValue().then((searchReturnData) => {
-            document.getElementById('')
-            // console.log('return value is: ', character);
-            // console.log('returnValue() returns: ', character);
+            const searchReturnData = {
+                name: data.name,
+                height: data.height,
+                mass: data.mass,
+                hairColor: data.hair_color
+            }
+
+       
+
+         
+           
+
+         
           
+
+
             const tableRow = document.createElement('tr');
             searchResult.appendChild(tableRow);
 
@@ -126,13 +138,24 @@ document
             tableRow.appendChild(tableCell4);
 
             tableCell1.textContent = searchReturnData.name;
-            // tableCell2.textContent = name.height;
-            // tableCell3.textContent = name.mass;
-            // tableCell4.textContent = name.hair_color;
-          console.log('search return data: ', searchReturnData);
+            tableCell2.textContent = searchReturnData.height;
+            tableCell3.textContent = searchReturnData.mass;
+            tableCell4.textContent = searchReturnData.hairColor;
+            console.log('search return data: ', searchReturnData);
+    });
+    
+    })
+}
+document
+    .getElementById("submitButton")
+    .addEventListener('click', () => {
+        searchResult.textContent = returnValue();
+    })
+      
+       
+      
 
            
-        });
-    })
 
-    console.log(returnValue());
+
+
