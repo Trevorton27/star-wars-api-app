@@ -83,7 +83,7 @@ window.addEventListener('load', async () => {
 });
 
 const returnValue = async function() {
-  return  await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
+    await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
     .then(response => response.json())
     .then(response => {
         console.log( response.results);
@@ -143,9 +143,14 @@ const returnValue = async function() {
 document
     .getElementById("submitButton")
     .addEventListener('click', () => {
-        searchResult.textContent = returnValue();
-        inputField.value = "";
-        inputField.focus;
+        if(inputField.value !== '') {
+            searchResult.textContent = returnValue();
+            inputField.value = "";
+            inputField.focus;
+        } else {
+            alert('Please enter a character name. May the force be with you.');
+        }
+      
 
     })
       
