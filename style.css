@@ -5,7 +5,11 @@
 #top-row{
     padding: 2em 2em 2em 2em;
     margin-bottom: 4em;
-    min-height: 20%;
+    min-height: 25%;
+}
+
+#input-field{
+    min-width: 25%;
 }
 .table{
     margin-top: 2em 2em 2em 2em;

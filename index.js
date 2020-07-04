@@ -2,7 +2,7 @@ const table = document.getElementById("main-table");
 const inputField = document.getElementById("input-field");
 const searchResult = document.getElementById("search-results");
 const searchTable = document.getElementById("main-row");
-
+let rendered = false;
 
 window.addEventListener('load', async () => {
 
@@ -103,9 +103,12 @@ const returnValue = async function() {
         tableHead3.textContent = 'Mass';
         tableHead4.textContent = 'Hair Color';
 
+        rendered = true;
     }
-   
+        
+       if(rendered === false) {
         renderTableHeader();
+       } 
       
         data.forEach((data) => {
 
@@ -115,15 +118,6 @@ const returnValue = async function() {
                 mass: data.mass,
                 hairColor: data.hair_color
             }
-
-       
-
-         
-           
-
-         
-          
-
 
             const tableRow = document.createElement('tr');
             searchResult.appendChild(tableRow);
@@ -143,13 +137,16 @@ const returnValue = async function() {
             tableCell4.textContent = searchReturnData.hairColor;
             console.log('search return data: ', searchReturnData);
     });
-    
-    })
+  })
 }
+
 document
     .getElementById("submitButton")
     .addEventListener('click', () => {
         searchResult.textContent = returnValue();
+        inputField.value = "";
+        inputField.focus;
+
     })
       
        
