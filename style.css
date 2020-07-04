@@ -19,6 +19,12 @@
     
 }
 
+#search-table{
+    margin-top: 2em 2em 2em 2em;
+    max-width: 60%;
+    border: 1px solid #000000;
+    border-radius: 10px;;
+}
 #main-row {
     padding: 2em 2em 2em 2em;
     margin-bottom: 4em;
