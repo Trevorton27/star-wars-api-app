@@ -83,7 +83,7 @@ window.addEventListener('load', async () => {
 });
 
 const returnValue = async function() {
-    await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
+  return  await fetch('https://swapi.dev/api/people/?search=' + inputField.value )
     .then(response => response.json())
     .then(response => {
         console.log( response.results);
@@ -150,11 +150,5 @@ document
         } else {
             alert('Please enter a character name. May the force be with you.');
         }
-      
 
     })
-      
-       
-      
-
-           
