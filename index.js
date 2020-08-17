@@ -7,7 +7,7 @@ const clearSearchButtonHook = document.getElementById("button-hook");
 let rendered = false;
 let clicked = false;
 const getSpecies = async (speciesUrl) => {
-    const response = await fetch(speciesUrl)
+    const response = await fetch(speciesUrl.replace('http', 'https'))
         .then((response) => {
 
             return response.json();
@@ -22,8 +22,8 @@ const getSpecies = async (speciesUrl) => {
 
 const getCharacterData = async (character) => {
     console.log(typeof character);
-    const world = await getHomeWorld(character.homeworld);
-    const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
+    const world = await getHomeWorld(character.homeworld.replace('http', 'https'));
+    const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species.replace('http', 'https'));
 
     const tableData = {
         name: character.name,
@@ -37,7 +37,7 @@ const getCharacterData = async (character) => {
 };
 
 const getHomeWorld = async (homeWorld) => {
-    const response = await fetch(homeWorld)
+    const response = await fetch(homeWorld.replace('http', 'https'))
         .then((response) => {
             return response.json();
         });
