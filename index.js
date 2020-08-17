@@ -126,12 +126,31 @@ const renderSearchData = async function () {
                 })
             }
 
-
-            if (rendered === false) {
-                renderTableHeader();
-                renderButton();
+            function renderNoResultsButton() {
+                const clearSearchButton = document.createElement("button");
+                clearSearchButtonHook.appendChild(clearSearchButton);
+                clearSearchButton.textContent = 'Back To Main Page';
+                clearSearchButton.className = "clearSearch";
+                clearSearchButton.addEventListener('click', () => {
+                    window.location.reload();
+                })
             }
 
+
+            if (rendered === false) {
+                if(data.length === 0) {
+                    const noResults = document.createElement("div");
+                    searchTable.appendChild(noResults);
+                    noResults.textContent = "There were no results for " + inputField.value + ". May the force be with you."
+                    renderNoResultsButton();
+
+                } else {
+                    renderTableHeader();
+                    renderButton();
+                }
+               
+            }
+            console.log('data is ', data);
             data.forEach((data) => {
 
                 getCharacterData(data).then((data) => {
