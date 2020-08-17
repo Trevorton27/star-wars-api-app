@@ -1,62 +1,66 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Swapi</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-      <div class="container">
-          <div id="main-title" class="row justify-content-center" >
-      <h1 id="app-intro">swapi.dev api app</h1>
-          </div>
-      <div class="row justify-content-center" >
-    <p>A simple app demonstrating three API calls in one with search functionality and event triggered rendering.</p>
-   
-    
-</div>
 
-<div  class="container">
-  
-  <div id="top-row" class="row justify-content-center">
+<head>
+  <title>Swapi</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-    <input id="input-field" class="field" type="text" id="search-field" placeholder="Search for a character by name"><button id="submitButton" class="btn btn-primary" type="submit"><img src="search.svg" alt="search-icon"></button>
-  </div>
-  <div  class="row justify-content-center">
-    <table id="search-table" class="table1 table table-striped ">
-      <thead >
-        <tr id="main-row">
-
-        </tr>
-      </thead>
-      <tbody id="search-results">
-        
-      </tbody>
-    </table>
-   
+<body>
+  <div class="container">
+    <div id="main-title" class="row justify-content-center">
+      <h1 id="app-intro">Swapi.dev App</h1>
     </div>
-</div>
-</div>
+    <div class="row justify-content-center">
+      <p>A simple app demonstrating proficiency with the <a href="https://swapi.dev/">Star Wars API</a> </p>
+
+
+    </div>
+
+    <div class="container">
+
+      <div id="top-row" class="row justify-content-center">
+
+        <input id="input-field" class="field" type="text" id="search-field"
+          placeholder="Search for a character by name"><button id="submitButton" class="btn btn-primary"
+          type="submit"><img src="search.svg" alt="search-icon"></button>
+      </div>
+      <div class="row justify-content-center">
+        <table id="search-table" class="table1 table table-striped ">
+          <thead>
+            <tr id="main-row">
+            </tr>
+          </thead>
+          <tbody id="search-results">
+          </tbody>
+        </table>
+      </div>
+      <div class="row justify-content-center" id="button-hook"></div>
+    </div>
+  </div>
   <div class="row justify-content-center">
     <table id="table-display" class="table table-striped">
-        <thead>
-          <tr>
-           <th>Name</th>
-           <th>Birth Date</th>
-           <th>Height</th>
-           <th>Mass</th>
-           <th>Homeworld</th>
-           <th>Species</th>
-          </tr>
-        </thead>
-        
-            <tbody id="main-table">
-              
-           
-            </tbody>
-      </table>
-    </div>
-  </body>
-  <script src="index.js"></script>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Birth Date</th>
+          <th>Height</th>
+          <th>Mass</th>
+          <th>Homeworld</th>
+          <th>Species</th>
+        </tr>
+      </thead>
+
+      <tbody id="main-table">
+
+
+      </tbody>
+    </table>
+  </div>
+</body>
+<script src="index.js"></script>
+
 </html>

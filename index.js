@@ -3,6 +3,7 @@ const table = document.getElementById("main-table");
 const inputField = document.getElementById("input-field");
 const searchResult = document.getElementById("search-results");
 const searchTable = document.getElementById("main-row");
+const clearSearchButtonHook = document.getElementById("button-hook");
 let rendered = false;
 let clicked = false;
 const getSpecies = async (speciesUrl) => {
@@ -18,43 +19,41 @@ const getSpecies = async (speciesUrl) => {
     return speciesName;
 
 }
-window.addEventListener('load', async () => {
+
+const getCharacterData = async (character) => {
+    console.log(typeof character);
+    const world = await getHomeWorld(character.homeworld);
+    const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
+
+    const tableData = {
+        name: character.name,
+        height: character.height,
+        mass: character.mass,
+        homeWorld: world,
+        species: species,
+        birthDate: character.birth_year
+    };
+    return tableData;
+};
+
+const getHomeWorld = async (homeWorld) => {
+    const response = await fetch(homeWorld)
+        .then((response) => {
+            return response.json();
+        });
+
+    const worldInfo = response;
+    const worldName = worldInfo.name;
+    return worldName;
+};
+
+async function renderDataOnLoad() {
 
     const getPeople = await fetch('https://swapi.dev/api/people/')
         .then((response) => response.json());
     console.log('people api results: ', getPeople.results);
     const people = getPeople.results;
-
     people.forEach((character) => {
-
-        const getHomeWorld = async (homeWorld) => {
-            const response = await fetch(homeWorld)
-                .then((response) => {
-                    return response.json();
-                });
-
-            const worldInfo = response;
-            const worldName = worldInfo.name;
-            return worldName;
-        };
-
-       
-
-        const getCharacterData = async (character) => {
-            console.log(typeof character);
-            const world = await getHomeWorld(character.homeworld);
-            const species = character.species.length === 0 ? "Humanoid" : await getSpecies(character.species);
-
-            const tableData = {
-                name: character.name,
-                height: character.height,
-                mass: character.mass,
-                homeWorld: world,
-                species: species,
-                birthDate: character.birth_year
-            };
-            return tableData;
-        };
 
         getCharacterData(character).then((tableData) => {
 
@@ -82,19 +81,16 @@ window.addEventListener('load', async () => {
             tableCell6.textContent = tableData.species;
         });
     })
-});
+}
 
-const returnValue = async function () {
+const renderSearchData = async function () {
     return await fetch('https://swapi.dev/api/people/?search=' + inputField.value)
         .then(response => response.json())
         .then(response => {
-            // console.log( response.results);
             const data = response.results;
             return data;
         })
         .then((data) => {
-
-            console.log("data is ", data);
             function renderTableHeader() {
 
                 const tableHead1 = document.createElement('th');
@@ -111,61 +107,67 @@ const returnValue = async function () {
                 searchTable.appendChild(tableHead6);
 
                 tableHead1.textContent = 'Name';
-                tableHead2.textContent = 'Height';
-                tableHead3.textContent = 'Mass';
-                tableHead4.textContent = 'Hair Color';
-                tableHead5.textContent =  'Homeworld';
+                tableHead2.textContent = 'Birth Date';
+                tableHead3.textContent = 'Height';
+                tableHead4.textContent = 'Mass';
+                tableHead5.textContent = 'Homeworld';
                 tableHead6.textContent = 'Species';
 
-                tableDisplay.remove();
-                table.remove();
                 rendered = true;
             }
+
+            function renderButton() {
+                const clearSearchButton = document.createElement("button");
+                clearSearchButtonHook.appendChild(clearSearchButton);
+                clearSearchButton.textContent = 'Clear Search Results';
+                clearSearchButton.className = "clearSearch";
+                clearSearchButton.addEventListener('click', () => {
+                    window.location.reload();
+                })
+            }
+
+
             if (rendered === false) {
                 renderTableHeader();
+                renderButton();
             }
-            console.log(data);
-         
+
             data.forEach((data) => {
-                const species =   getSpecies(data.species)
-                const searchReturnData = {
-                    name: data.name,
-                    height: data.height,
-                    mass: data.mass,
-                    hairColor: data.hair_color,
-                    species: species 
+
+                getCharacterData(data).then((data) => {
+                    const tableRow = document.createElement('tr');
+                    searchResult.appendChild(tableRow);
+
+                    const tableCell1 = document.createElement('td');
+                    tableRow.appendChild(tableCell1);
+                    const tableCell2 = document.createElement('td');
+                    tableRow.appendChild(tableCell2);
+                    const tableCell3 = document.createElement('td');
+                    tableRow.appendChild(tableCell3);
+                    const tableCell4 = document.createElement('td');
+                    tableRow.appendChild(tableCell4);
+                    const tableCell5 = document.createElement('td');
+                    tableRow.appendChild(tableCell5);
+                    const tableCell6 = document.createElement('td');
+                    tableRow.appendChild(tableCell6);
+
+                    tableCell1.textContent = data.name;
+                    tableCell2.textContent = data.birthDate;
+                    tableCell3.textContent = data.height;
+                    tableCell4.textContent = data.mass;
+                    tableCell5.textContent = data.homeWorld;
+                    tableCell6.textContent = data.species;
+                    console.log('search return data: ', data);
+
                 }
-
-                console.log("getSpecies() is returning ", getSpecies());
-
-                const tableRow = document.createElement('tr');
-                searchResult.appendChild(tableRow);
-
-                const tableCell1 = document.createElement('td');
-                tableRow.appendChild(tableCell1);
-                const tableCell2 = document.createElement('td');
-                tableRow.appendChild(tableCell2);
-                const tableCell3 = document.createElement('td');
-                tableRow.appendChild(tableCell3);
-                const tableCell4 = document.createElement('td');
-                tableRow.appendChild(tableCell4);
-                const tableCell5 = document.createElement('td');
-                tableRow.appendChild(tableCell5);
-                const tableCell6 = document.createElement('td');
-                tableRow.appendChild(tableCell6);
-
-                tableCell1.textContent = searchReturnData.name;
-                tableCell2.textContent = searchReturnData.height;
-                tableCell3.textContent = searchReturnData.mass;
-                tableCell4.textContent = searchReturnData.hairColor;
-                tableCell5.textContent = 'Hey you guys!';
-                tableCell6.textContent = searchReturnData.species;
-                console.log('search return data: ', searchReturnData);
-
-                clicked = true;
+                )
             });
+            clicked = true;
+            tableDisplay.remove();
         })
 }
+
+window.addEventListener('load', renderDataOnLoad());
 
 document
     .getElementById("submitButton")
@@ -173,7 +175,7 @@ document
 
         if (inputField.value !== '') {
             if (clicked === true) searchResult.textContent = '';
-            returnValue();
+            renderSearchData();
             inputField.value = "";
             inputField.focus;
         } else {
