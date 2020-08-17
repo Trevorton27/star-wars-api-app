@@ -149,6 +149,7 @@ const renderSearchData = async function () {
                     renderNoResultsButton();
 
                 } else {
+                    searchForm.remove();
                     renderTableHeader();
                     renderButton();
                 }
