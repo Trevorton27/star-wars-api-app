@@ -40,3 +40,10 @@
     border-color: #007bff;
     border-radius: 10px;
 }
+
+.noResultsDiv {
+    text-align: center;
+    background-color: #f2f2f2;
+    font-size: 18px;
+    padding: .5em 1.7em .5em 1.7em;
+}

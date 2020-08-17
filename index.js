@@ -4,6 +4,7 @@ const inputField = document.getElementById("input-field");
 const searchResult = document.getElementById("search-results");
 const searchTable = document.getElementById("main-row");
 const clearSearchButtonHook = document.getElementById("button-hook");
+const searchForm = document.getElementById("top-row");
 let rendered = false;
 let clicked = false;
 const getSpecies = async (speciesUrl) => {
@@ -84,7 +85,8 @@ async function renderDataOnLoad() {
 }
 
 const renderSearchData = async function () {
-    return await fetch('https://swapi.dev/api/people/?search=' + inputField.value)
+    const searchTerm = inputField.value;
+    return await fetch('https://swapi.dev/api/people/?search=' + searchTerm)
         .then(response => response.json())
         .then(response => {
             const data = response.results;
@@ -141,7 +143,9 @@ const renderSearchData = async function () {
                 if(data.length === 0) {
                     const noResults = document.createElement("div");
                     searchTable.appendChild(noResults);
-                    noResults.textContent = "There were no results for " + inputField.value + ". May the force be with you."
+                    noResults.className ="noResultsDiv";
+                    noResults.textContent = "There were no results for '" +  searchTerm + "'. May the force be with you.";
+                    searchForm.remove();
                     renderNoResultsButton();
 
                 } else {
