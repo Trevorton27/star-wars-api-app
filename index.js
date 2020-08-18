@@ -7,7 +7,9 @@ const clearSearchButtonHook = document.getElementById("button-hook");
 const searchForm = document.getElementById("top-row");
 let rendered = false;
 let clicked = false;
+
 const getSpecies = async (speciesUrl) => {
+    speciesUrl = "https://swapi.dev/api/species/2/"; 
     const response = await fetch(speciesUrl)
         .then((response) => {
 
@@ -38,7 +40,7 @@ const getCharacterData = async (character) => {
 };
 
 const getHomeWorld = async (homeWorld) => {
-    const response = await fetch(homeWorld)
+    const response = await fetch(homeWorld.replace('http', 'https'))
         .then((response) => {
             return response.json();
         });
@@ -144,7 +146,7 @@ const renderSearchData = async function () {
                     const noResults = document.createElement("div");
                     searchTable.appendChild(noResults);
                     noResults.className ="noResultsDiv";
-                    noResults.textContent = "There were no results for '" +  searchTerm + "'. May the force be with you.";
+                    noResults.textContent = "There were no results for " +  searchTerm + ". May the force be with you.";
                     searchForm.remove();
                     renderNoResultsButton();
 
