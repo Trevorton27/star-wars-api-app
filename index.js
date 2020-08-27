@@ -189,7 +189,6 @@ const renderSearchData = async function () {
 window.addEventListener('load', renderDataOnLoad());
 
 inputField.addEventListener('keydown', function (e) {
-  console.log(e.which);
   if (e.which === 13) {
     if (e.target.value !== '') {
       renderSearchData();
