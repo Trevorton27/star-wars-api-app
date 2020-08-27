@@ -5,6 +5,7 @@ const searchResult = document.getElementById('search-results');
 const searchTable = document.getElementById('main-row');
 const clearSearchButtonHook = document.getElementById('button-hook');
 const searchForm = document.getElementById('top-row');
+const submitButton = document.getElementById('submitButton');
 let rendered = false;
 let clicked = false;
 
@@ -143,10 +144,7 @@ const renderSearchData = async function () {
           const noResults = document.createElement('div');
           searchTable.appendChild(noResults);
           noResults.className = 'noResultsDiv';
-          noResults.textContent =
-            'There were no results for ' +
-            searchTerm +
-            '. May the force be with you.';
+          noResults.textContent = `There were no results for "${searchTerm}". May the force be with you.`;
           searchForm.remove();
           renderNoResultsButton();
         } else {
@@ -201,7 +199,7 @@ inputField.addEventListener('keydown', function (e) {
   }
 });
 
-document.getElementById('submitButton').addEventListener('click', () => {
+submitButton.addEventListener('click', () => {
   if (inputField.value !== '') {
     if (clicked === true) searchResult.textContent = '';
     renderSearchData();
