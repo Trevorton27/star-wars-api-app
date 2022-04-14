@@ -10,7 +10,6 @@ let rendered = false;
 let clicked = false;
 
 const getSpecies = async (speciesUrl) => {
-  speciesUrl = 'https://swapi.dev/api/species';
   const response = await fetch(speciesUrl).then((response) => {
     return response.json();
   });
@@ -21,13 +20,23 @@ const getSpecies = async (speciesUrl) => {
   return speciesName;
 };
 
+const getHomeWorld = async (homeWorld) => {
+  const response = await fetch(homeWorld).then((response) => {
+    return response.json();
+  });
+
+  const worldInfo = response;
+  const worldName = worldInfo.name;
+  return worldName;
+};
+
 const getCharacterData = async (character) => {
   console.log(typeof character);
   const world = await getHomeWorld(character.homeworld);
   const species =
-    character.species.length === 0
-      ? 'Humanoid'
-      : await getSpecies(character.species);
+    character.species.length !== 0
+      ? await getSpecies(character.species)
+      : 'Biological';
 
   const tableData = {
     name: character.name,
@@ -35,28 +44,15 @@ const getCharacterData = async (character) => {
     mass: character.mass,
     homeWorld: world,
     species: species,
-    birthDate: character.birth_year,
+    birthDate: character.birth_year
   };
   return tableData;
 };
 
-const getHomeWorld = async (homeWorld) => {
-  const homeworldUrl = 'https://swapi.dev/api/planets'
-  const response = await fetch(homeworldUrl)).then(
-    (response) => {
-      return response.json();
-    }
-  );
-
-  const worldInfo = response;
-  const worldName = worldInfo.name;
-  return worldName;
-};
-
 async function renderDataOnLoad() {
-  const getPeople = await fetch(
-    'https://swapi.dev/api/people/'
-  ).then((response) => response.json());
+  const getPeople = await fetch('https://swapi.dev/api/people/').then(
+    (response) => response.json()
+  );
   console.log('people api results: ', getPeople.results);
   const people = getPeople.results;
   people.forEach((character) => {
