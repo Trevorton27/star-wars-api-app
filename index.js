@@ -10,7 +10,7 @@ let rendered = false;
 let clicked = false;
 
 const getSpecies = async (speciesUrl) => {
-  speciesUrl = 'https://swapi.dev/api/species/2/';
+  speciesUrl = 'https://swapi.dev/api/species';
   const response = await fetch(speciesUrl).then((response) => {
     return response.json();
   });
@@ -41,7 +41,8 @@ const getCharacterData = async (character) => {
 };
 
 const getHomeWorld = async (homeWorld) => {
-  const response = await fetch(homeWorld.replace('http', 'https')).then(
+  const homeworldUrl = 'https://swapi.dev/api/planets'
+  const response = await fetch(homeworldUrl)).then(
     (response) => {
       return response.json();
     }
